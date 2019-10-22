@@ -1,6 +1,8 @@
 <?php
 
-require ('classes/FileDB.php');
+require('functions/file.php');
+require('classes/FileDB.php');
+
 
 $index = new FileDB('index.php');
 
