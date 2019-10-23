@@ -99,6 +99,7 @@ class FileDB
     {
         if (!$this->tableExists($table_name)) {
             $this->data[$table_name] = [];
+            return true;
         } else {
             return false;
         }
@@ -117,6 +118,16 @@ class FileDB
         return false;
 
     }
+
+    /**
+     * @param $table_name string lentles, kuria norime istrinti pavadinimas
+     * @return mixed grazina ar istryne lentele ar ne
+     */
+    public function dropTable($table_name)
+    {
+        unset($this->data[$table_name]);
+    }
+
 }
 
 
