@@ -40,6 +40,7 @@ $index = new FileDB('text.txt');
 $index->load();
 var_dump($index->createTable('ratai'));
 var_dump($index->dropTable('ratai'));
+var_dump($index->truncateTable('table'));
 var_dump($index->getData());
 
 

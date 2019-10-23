@@ -128,6 +128,21 @@ class FileDB
         unset($this->data[$table_name]);
     }
 
+    /**
+     * Funkcija, kuri istustina lentele, bet jos neistrina
+     * @param $table_name - lenteles, kuria norime istustini pavadinimas
+     * @return bool rezultatas ar pavyko istustinti ar ne
+     */
+    public function truncateTable($table_name)
+    {
+        if (isset($this->data[$table_name])) {
+            $this->data[$table_name] = [];
+            return true;
+        }
+        return false;
+
+    }
+
 }
 
 
