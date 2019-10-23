@@ -35,18 +35,8 @@ $array = [
         ],
     ]
 ];
-$index->load();
-var_dump($index->getData());
-?>
-<html>
-<head>
-    <meta charset="UTF-8">
-</head>
-<body>
-    <?php $index->load();?>
-    <div><?php $index->getRow('table', 1);?></div>
-</body>
-</html>
+
+
 
 
 

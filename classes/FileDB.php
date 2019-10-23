@@ -97,14 +97,25 @@ class FileDB
      */
     public function createTable($table_name)
     {
-        if (!isset($table_name)) {
-            $table_name = [];
+        if (!isset($this->data[$table_name])) {
+            $this->data[$table_name] = [];
         } else {
             return false;
         }
     }
 
-
+    /**
+     * Funkcija, kuri pasako ar lentele egzistuoja ar ne
+     * @param $table_name - lenteteles pavadinimas
+     * @return boolean grazina ar yra tokia lentele ar ne
+     */
+    public function tableExists($table_name)
+    {
+        if (isset($this->data[$table_name])) {
+            return true;
+        }
+        return false;
+    }
 }
 
 
