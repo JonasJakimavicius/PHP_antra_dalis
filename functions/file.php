@@ -11,7 +11,7 @@ function file_to_array($file_name)
     return false;
 }
 
-function array_to_file($file_name, $array)
+function array_to_file($array, $file_name)
 {
     $data = json_encode($array);
     $file = file_put_contents($file_name, $data);
