@@ -9,20 +9,20 @@ $index = new FileDB('text.txt');
 
 $array = [
     'table' => [
-        ['bla vla',
+        0 => ['bla vla',
             'tmaklASD1',
-            'SABJDSAJKD2'
+            'SABJDSAJKD2',
         ],
-        [
+        1 => [
             'asnkjana1',
             'jkasdkjasnd2',
             'bjasdsakjnd3'
         ],
-        [
+        2 => [
             'nasndkasnd1',
             'audbiusdiu2',
         ],
-        ['asdnkasndkj',
+        4 => ['asdnkasndkj',
             'naksdnjkasdnj'
         ]
     ],
@@ -40,7 +40,10 @@ $index = new FileDB('text.txt');
 $index->load();
 var_dump($index->createTable('ratai'));
 var_dump($index->dropTable('ratai'));
-var_dump($index->truncateTable('table'));
+
+var_dump($index->insertRow('table', ['idejau', 'bsabdjasbhd']));
+
+
 var_dump($index->getData());
 
 

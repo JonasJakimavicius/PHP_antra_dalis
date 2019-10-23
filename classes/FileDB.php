@@ -135,7 +135,7 @@ class FileDB
      */
     public function truncateTable($table_name)
     {
-        if (isset($this->data[$table_name])) {
+        if ($this->tableExists($table_name)) {
             $this->data[$table_name] = [];
             return true;
         }
@@ -143,6 +143,31 @@ class FileDB
 
     }
 
+
+    /**
+     * funkcija, kuri nurodytu indeksu ideda eilute, o jei indeksas nenurodytas, ikisa i gala.
+     * Jei eilute uzimta- grazina false
+     * @param $table_name
+     * @param $row
+     * @param null $row_id
+     * @return bool|int|null
+     */
+    public function insertRow($table_name, $row, $row_id = null)
+    {
+        if ($row_id === null) {
+            $this->data[$table_name][] = $row;
+            $key=array_keys($this->data[$table_name]);
+            $row_id = end($key);
+            return $row_id;
+        } else {
+            if (isset($this->data[$table_name][$row_id])) {
+                return false;
+            } else {
+                $this->data[$table_name][$row_id] = $row;
+            }
+        }
+
+    }
 }
 
 
