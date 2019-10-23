@@ -92,12 +92,12 @@ class FileDB
     }
 
     /**
-     * @param $table_name pavadinimas, kuriuo norime sukurti lentele (masyva)
+     * @param $table_name string pavadinimas, kuriuo norime sukurti lentele (masyva)
      * @return bool jei lentele tokiu pavadinimu sukurta - grazina false
      */
     public function createTable($table_name)
     {
-        if (!isset($this->data[$table_name])) {
+        if (!$this->tableExists($table_name)) {
             $this->data[$table_name] = [];
         } else {
             return false;
@@ -115,6 +115,7 @@ class FileDB
             return true;
         }
         return false;
+
     }
 }
 

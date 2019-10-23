@@ -36,6 +36,11 @@ $array = [
     ]
 ];
 
+$index = new FileDB('text.txt');
+$index->load();
+var_dump($index->createTable('ratai'));
+var_dump($index->getData());
+
 
 
 
