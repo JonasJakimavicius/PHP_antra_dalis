@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 require('functions/file.php');
 require('classes/FileDB.php');
 require ('classes/privateDB.php');
@@ -50,7 +51,7 @@ $array = [
 $index = new FileDB('/Users/home/Desktop/php projektai/text.txt');
 
 $gerimas=new Drink();
-$gerimas->set_name('Alus');
+$gerimas->set_name('alus');
 $gerimas->set_abarot(0.7);
 $gerimas->set_amount(500);
 $gerimas->set_image('https://www.barbora.lt/api/Images/GetInventoryImage?id=745450b8-147c-46e9-9870-90af17d7d5e6');

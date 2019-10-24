@@ -12,6 +12,7 @@ class FileDB
     public function __construct($file_name)
     {
         $this->file_name = $file_name;
+        $this->load();
     }
 
     /**
@@ -43,22 +44,6 @@ class FileDB
         return array_to_file($this->data, $this->file_name);
     }
 
-    /**
-     * funkcija, kuri istraukia eilutes informacija is lenteles (masyva is masyvo)
-     * @param $table - musu pasirinkta lentele (masyvas)
-     * @param $row_id (eilute, kurios mums reik)
-     * @return boolean - jei nurodytos lenteles nera - grazina false
-     */
-    public function getRow($table, $row_id)
-    {
-        if (isset($this->data[$table])) {
-            foreach ($this->data[$table][$row_id] as $row) {
-                print $row;
-            }
-        } else {
-            return false;
-        }
-    }
 
     /**
      * funkcija, kuri ideda eilutes informacija i lentele (masyva i masyva
@@ -156,18 +141,125 @@ class FileDB
     {
         if ($row_id === null) {
             $this->data[$table_name][] = $row;
-            $key=array_keys($this->data[$table_name]);
-            $row_id = end($key);
-            return $row_id;
+            end($this->data[$table_name]);
+            return $row_id = key($this->data[$table_name]);
         } else {
             if (isset($this->data[$table_name][$row_id])) {
                 return false;
             } else {
                 $this->data[$table_name][$row_id] = $row;
+                return $row_id;
             }
         }
 
     }
+
+    /**
+     * funkcija, kuri patikrina ar eilute jau egzistuoja
+     * @param $table_name
+     * @param $row_id
+     * @return bool
+     */
+    public function rowExists($table_name, $row_id)
+    {
+        if (isset($this->data[$table_name][$row_id])) {
+            return true;
+        }
+        return false;
+
+    }
+
+    /**
+     * Funkcija, kuri peraso eiute nurodytu  indeksu nauju masyvu.
+     * @param $table_name
+     * @param $row
+     * @param $row_id
+     * @return bool
+     */
+    public function updateRow($table_name, $row, $row_id)
+    {
+        if ($this->rowExists($table_name, $row_id)) {
+            $this->data[$table_name][$row_id] = $row;
+            return true;
+        }
+        return false;
+
+    }
+
+    public function insertRowIfNotExists($table_name, $row, $row_id)
+    {
+        if (!$this->rowExists($table_name, $row_id)) {
+            $this->data[$table_name][$row_id] = $row;
+            return $row_id;
+        }
+        return false;
+    }
+
+    /**
+     * funkcija, kuri istrina eilute is lenteles pagal nurodyta indeksa.
+     * @param $table_name
+     * @param $row_id
+     * @return bool
+     */
+    public function deleteRow($table_name, $row_id)
+    {
+        if ($this->rowExists($table_name, $row_id)) {
+            unset($this->data[$table_name][$row_id]);
+            return true;
+        }
+        return false;
+
+    }
+
+    /**
+     * //     * funkcija, kuri istraukia eilutes informacija is lenteles (masyva is masyvo)
+     * //     * @param $table - musu pasirinkta lentele (masyvas)
+     * //     * @param $row_id (eilute, kurios mums reik)
+     * //     * @return boolean - jei nurodytos lenteles nera - grazina false
+     * //     */
+    public function getRow($table, $row_id)
+    {
+        if ($this->rowExists($table, $row_id)) {
+            return $this->data[$table][$row_id];
+        }
+        return false;
+    }
+
+    /**
+     * Funkcija, kuri iesko lenteleje eiluciu, kuriu stulpeliu informacija sutampa su ta, kurios ieskome (pateikiame $conditions_array) Turi sutapti visi parametrai.
+     * @param $table_name - lentele,is kurios norim issitraukti eilutes
+     * @param $conditions_array - parametru masyvas, kuriame nurodyta pagal ka filtruojame
+     * @return array|bool jei viskas ok, grazina nauja lentele, jei ne- grazina false.
+     */
+    public function getRowsWhere($table_name, $conditions_array)
+    {
+        if ($this->tableExists($table_name)) {
+            $new_table = [];
+
+            foreach ($this->data[$table_name] as $row_id => $row) {
+                $success = true;
+                foreach ($conditions_array as $condition_id => $condition) {
+
+                    if ($row[$condition_id] !== $condition) {
+                        $success = false;
+                        break;
+                    }
+                }
+                if ($success) {
+                    $row['row_id'] = $row_id;
+                    $new_table[$row_id] = $row;
+                }
+            }
+            return $new_table;
+        }
+        return false;
+    }
+
+    public function __destruct()
+    {
+        $this->save();
+    }
+
 }
 
 

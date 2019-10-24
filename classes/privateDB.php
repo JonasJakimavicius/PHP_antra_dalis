@@ -56,8 +56,8 @@ class Drink
     /**
      * @param array $data
      */
-    public function set_image(string $image)
+    public function set_image(string $url)
     {
-        $this->data['image'] = $image;
+        $this->data['image'] = $url;
     }
 }
