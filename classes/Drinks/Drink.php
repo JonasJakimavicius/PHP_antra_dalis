@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
 class Drink
 {
     private $data = [];
 
 
-    public function get_name()
+    public function getName()
     {
         return $this->data['name'];
     }
@@ -15,13 +13,13 @@ class Drink
     /**
      * @param array $data
      */
-    public function set_name(string $name)
+    public function setName(string $name)
     {
         $this->data['name'] = $name;
     }
 
 
-    public function get_amount()
+    public function getAmount()
     {
        return $this->data['amount_ml'];
     }
@@ -29,12 +27,12 @@ class Drink
     /**
      * @param array $data
      */
-    public function set_amount(int $amount_ml)
+    public function setAmount(int $amount_ml)
     {
         $this->data['amount_ml'] = $amount_ml;
     }
 
-    public function get_abarot()
+    public function getAbarot()
     {
        return $this->data['abarot'];
     }
@@ -42,13 +40,13 @@ class Drink
     /**
      * @param array $data
      */
-    public function set_abarot(float $abarot)
+    public function setAbarot(float $abarot)
     {
         $this->data['abarot'] = $abarot;
     }
 
 
-    public function get_image()
+    public function getImage()
     {
        return $this->data['image'];
     }
@@ -56,7 +54,7 @@ class Drink
     /**
      * @param array $data
      */
-    public function set_image(string $url)
+    public function setImage(string $url)
     {
         $this->data['image'] = $url;
     }

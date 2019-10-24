@@ -3,7 +3,7 @@
 declare(strict_types=1);
 require('functions/file.php');
 require('classes/FileDB.php');
-require ('classes/privateDB.php');
+require('classes/drinks/Drink.php');
 
 
 
@@ -51,16 +51,16 @@ $array = [
 $index = new FileDB('/Users/home/Desktop/php projektai/text.txt');
 
 $gerimas=new Drink();
-$gerimas->set_name('alus');
-$gerimas->set_abarot(0.7);
-$gerimas->set_amount(500);
-$gerimas->set_image('https://www.barbora.lt/api/Images/GetInventoryImage?id=745450b8-147c-46e9-9870-90af17d7d5e6');
+$gerimas->setName('alus');
+$gerimas->setAbarot(0.7);
+$gerimas->setAmount(500);
+$gerimas->setImage('https://www.barbora.lt/api/Images/GetInventoryImage?id=745450b8-147c-46e9-9870-90af17d7d5e6');
 
 
-var_dump($gerimas->get_abarot());
-var_dump($gerimas->get_amount());
-var_dump($gerimas->get_name());
-var_dump($gerimas->get_image());
+var_dump($gerimas->getAbarot());
+var_dump($gerimas->getAmount());
+var_dump($gerimas->getName());
+var_dump($gerimas->getImage());
 
 
 
