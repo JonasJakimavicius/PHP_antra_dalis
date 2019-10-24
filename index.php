@@ -2,29 +2,38 @@
 
 require('functions/file.php');
 require('classes/FileDB.php');
+require ('classes/privateDB.php');
 
 
-$index = new FileDB('text.txt');
 
 
 $array = [
     'table' => [
-        0 => ['bla vla',
-            'tmaklASD1',
-            'SABJDSAJKD2',
+        0 => [
+            'name' => 'Tomas',
+            'surname' => 'Baravykas',
+            'age' => '20',
         ],
         1 => [
-            'asnkjana1',
-            'jkasdkjasnd2',
-            'bjasdsakjnd3'
+            'name' => 'Adomas',
+            'surname' => 'Baravinskas',
+            'age' => '120',
         ],
         2 => [
-            'nasndkasnd1',
-            'audbiusdiu2',
+            'name' => 'Martynas',
+            'surname' => 'Baravykas',
+            'age' => '28',
         ],
-        4 => ['asdnkasndkj',
-            'naksdnjkasdnj'
-        ]
+        4 => [
+            'name' => 'Lomas',
+            'surname' => 'Laravykas',
+            'age' => '299',
+        ],
+        5 => [
+            'name' => 'Tomas',
+            'surname' => 'Baravykas',
+            'age' => '25',
+        ],
     ],
     'table2' => [
         [
@@ -36,17 +45,21 @@ $array = [
     ]
 ];
 
-$index = new FileDB('text.txt');
-$index->load();
-var_dump($index->createTable('ratai'));
-var_dump($index->dropTable('ratai'));
-
-var_dump($index->insertRow('table', ['idejau', 'bsabdjasbhd']));
 
 
-var_dump($index->getData());
+$index = new FileDB('/Users/home/Desktop/php projektai/text.txt');
+
+$gerimas=new Drink();
+$gerimas->set_name('Alus');
+$gerimas->set_abarot(0.7);
+$gerimas->set_amount(500);
+$gerimas->set_image('https://www.barbora.lt/api/Images/GetInventoryImage?id=745450b8-147c-46e9-9870-90af17d7d5e6');
 
 
+var_dump($gerimas->get_abarot());
+var_dump($gerimas->get_amount());
+var_dump($gerimas->get_name());
+var_dump($gerimas->get_image());
 
 
 
