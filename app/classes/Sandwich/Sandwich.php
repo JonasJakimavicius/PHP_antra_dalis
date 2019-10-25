@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Sandwich;
+
 class Sandwich
 {
     private $data = [];

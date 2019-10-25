@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Drinks;
+
 class Drink
 {
     private $data = [];
