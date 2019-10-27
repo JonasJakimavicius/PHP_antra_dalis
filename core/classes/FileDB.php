@@ -43,6 +43,7 @@ class FileDB
      */
     public function save()
     {
+
         return array_to_file($this->data, $this->file_name);
     }
 
@@ -259,6 +260,8 @@ class FileDB
 
     public function __destruct()
     {
+//        var_dump($this->data);
+//        var_dump($this->file_name);
         $this->save();
     }
 

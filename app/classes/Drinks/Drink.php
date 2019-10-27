@@ -109,7 +109,7 @@ class Drink
         if (isset($data['id'])) {
             $this->setId($data['id']);
         }else{
-            $this->$data['id']=null;
+            $this->data['id']=null;
         }
     }
 
