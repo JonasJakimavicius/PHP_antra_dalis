@@ -14,6 +14,7 @@ class Model
      * Sukuria FileDB objekta su failu nurodytu config.php
      * Sukuria lentele FileDB objekte pagal modelyje nurodyta $table_name
      */
+
     public function __construct()
     {
         $this->db = new \Core\FileDB(DB_FILE);
@@ -81,21 +82,20 @@ class Model
      */
     public function deleteAll()
     {
-        $drinks_array = $this->db->getData();
 
-        foreach ($drinks_array as $drinks) {
-            foreach ($drinks as $drink_id => $drink) {
 
-                $this->db->deleteRow($this->table_name, $drink_id);
-            }
-            $drinks_array = $this->db->getData();
-
-            if (empty($drinks_array[$this->table_name])) {
-                return true;
-            }
-            return false;
-        }
-
+        return $this->db->truncateTable($this->table_name);
+//        $drinks_array = $this->db->getData();
+//
+//        foreach ($drinks_array[$this->table_name] as $drink_id => $drink) {
+//            $this->db->deleteRow($this->table_name, $drink_id);
+//        }
+//
+//        $drinks_array = $this->db->getData();
+//        if (empty($drinks_array[$this->table_name])) {
+//            return true;
+//        }
+//        return false;
     }
 
 
