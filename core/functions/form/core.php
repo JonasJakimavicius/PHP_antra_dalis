@@ -8,6 +8,11 @@ function get_filtered_input($array)
     };
     return filter_input_array(INPUT_POST, $filter_parameters); // sitoj eilutej vyskta sanitation pagal default f-ja
 }
+
+function get_form_action() {
+    return filter_input(INPUT_POST, 'action', FILTER_SANITIZE_SPECIAL_CHARS);
+}
+
 function validate_form(&$form, $filtered_input)
 {
     $success = true;
