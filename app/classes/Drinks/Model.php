@@ -5,24 +5,25 @@ namespace App\Drinks;
 
 
 use Core\FileDB;
+use App\App;
 
 class Model
 {
-    private $db;
+    public $db;
     private $table_name = 'drinks';
 
 
     /**
      * Model constructor.
      * @param $db FileDB paduodamas FileDB objektas
-     * Sukuria FileDB objekta su failu nurodytu config.php
+     * Sukuria FileDB$App = new \App\App(); objekta su failu nurodytu config.php
      * Sukuria lentele FileDB objekte pagal modelyje nurodyta $table_name
      *
      */
-    public function __construct( $db)
+    public function __construct()
     {
-        $this->db = $db;
-        $this->db->createTable($this->table_name);
+        $this->db = App::$db;
+        App::$db->createTable($this->table_name);
 
     }
 
@@ -33,7 +34,7 @@ class Model
      */
     public function insertDrink(Drink $drink)
     {
-        return $this->db->insertRow($this->table_name, $drink->getData());
+        return App::$db->insertRow($this->table_name, $drink->getData());
 
     }
 
@@ -42,9 +43,9 @@ class Model
      * @param array $conditions
      * @return array
      */
-    public function getDrinks(array $conditions=[])
+    public function getDrinks(array $conditions = [])
     {
-        $array = $this->db->getRowsWhere($this->table_name, $conditions);
+        $array = App::$db->getRowsWhere($this->table_name, $conditions);
         $new_array = [];
         foreach ($array as $object_id => $object) {
             $object['id'] = $object['row_id'];
@@ -63,12 +64,12 @@ class Model
     {
 
         $drink_array = $drink->getData();
-        return $this->db->updateRow($this->table_name, $drink_array, $drink_array['id']);
+        return App::$db->updateRow($this->table_name, $drink_array, $drink_array['id']);
 
     }
 
     /**
-     * @param Drink $drink
+     * @param Drink $drink $
      * @return bool
      * Panaudojus funkcija getDrinks ir sukurus jai variable.
      * Sukamas foreach per sukurta variable ir foreach viduje iskvieciam sia funkcija.
@@ -77,7 +78,7 @@ class Model
     public function deleteDrink(Drink $drink)
     {
 
-        return $this->db->deleteRow($this->table_name, $drink->getId());
+        return App::$db->deleteRow($this->table_name, $drink->getId());
     }
 
     /**
@@ -86,7 +87,7 @@ class Model
      */
     public function deleteAll()
     {
-        return $this->db->truncateTable($this->table_name);
+        return App::$db->truncateTable($this->table_name);
 
 //                $drinks_array = $this->db->getData();
 

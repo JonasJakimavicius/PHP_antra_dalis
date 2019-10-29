@@ -34,8 +34,8 @@ $vodke4 = [
 
 
 //$drink = new \App\Drinks\Drink();
-$fileDB = new \Core\FileDB(DB_FILE);
-$modelDrinks = new \App\Drinks\Model($fileDB);
+
+$modelDrinks = new \App\Drinks\Model();
 
 $form = [
     'attr' => [],
@@ -101,16 +101,16 @@ if (!empty($filtered_input)) {
 
 function form_success($filtered_input, $form)
 {
-    $modelDrinks = new \App\Drinks\Model($fileDB);
+    $modelDrinks = new \App\Drinks\Model();
     $drink = new \App\Drinks\Drink($filtered_input);
-    var_dump($modelDrinks->insertDrink($drink));
+    $modelDrinks->insertDrink($drink);
 }
 
 function form_fail($filtered_input, &$form)
 {
 }
 
-var_dump($modelDrinks->getDrinks());
+//var_dump($modelDrinks->getDrinks());
 
 ?>
 <html>
@@ -165,6 +165,7 @@ var_dump($modelDrinks->getDrinks());
     </style>
 </head>
 <body>
+    <div class="form-container">   <?php require('../core/templates/form.tpl.php'); ?></div>
     <div class="container">
 
         <?php foreach ($modelDrinks->getDrinks() as $drink_id => $drink): ?>
@@ -177,7 +178,7 @@ var_dump($modelDrinks->getDrinks());
         <?php endforeach; ?>
     </div>
 
-    <div class="form-container">   <?php require('../core/templates/form.tpl.php'); ?></div>
+
 
 </body>
 </html>
