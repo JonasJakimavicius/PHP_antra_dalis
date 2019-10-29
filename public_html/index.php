@@ -110,8 +110,6 @@ function form_fail($filtered_input, &$form)
 {
 }
 
-//var_dump($modelDrinks->getDrinks());
-
 ?>
 <html>
 <head>
