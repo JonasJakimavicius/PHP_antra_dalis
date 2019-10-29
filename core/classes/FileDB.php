@@ -260,7 +260,7 @@ class FileDB
 
     public function __destruct()
     {
-//        var_dump($this->data);
+        var_dump($this->data);
 //        var_dump($this->file_name);
         $this->save();
     }

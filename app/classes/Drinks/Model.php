@@ -4,31 +4,36 @@
 namespace App\Drinks;
 
 
+use Core\FileDB;
+
 class Model
 {
     private $db;
     private $table_name = 'drinks';
 
+
     /**
      * Model constructor.
+     * @param $db FileDB paduodamas FileDB objektas
      * Sukuria FileDB objekta su failu nurodytu config.php
      * Sukuria lentele FileDB objekte pagal modelyje nurodyta $table_name
+     *
      */
-
-    public function __construct()
+    public function __construct( $db)
     {
-        $this->db = new \Core\FileDB(DB_FILE);
+        $this->db = $db;
         $this->db->createTable($this->table_name);
 
     }
 
     /**
      * @param Drink $drink
+     * @return true or false
      * Konvertuoja Drink objekta i array ir iraso i lentele FileDB objekte.
      */
     public function insertDrink(Drink $drink)
     {
-        $this->db->insertRow($this->table_name, $drink->getData());
+        return $this->db->insertRow($this->table_name, $drink->getData());
 
     }
 
@@ -37,7 +42,7 @@ class Model
      * @param array $conditions
      * @return array
      */
-    public function getDrinks(array $conditions)
+    public function getDrinks(array $conditions=[])
     {
         $array = $this->db->getRowsWhere($this->table_name, $conditions);
         $new_array = [];
@@ -71,9 +76,8 @@ class Model
      */
     public function deleteDrink(Drink $drink)
     {
-        $drink_array = $drink->getData();
 
-        return $this->db->deleteRow($this->table_name, $drink_array['id']);
+        return $this->db->deleteRow($this->table_name, $drink->getId());
     }
 
     /**
@@ -82,11 +86,10 @@ class Model
      */
     public function deleteAll()
     {
-
-
         return $this->db->truncateTable($this->table_name);
-//        $drinks_array = $this->db->getData();
-//
+
+//                $drinks_array = $this->db->getData();
+
 //        foreach ($drinks_array[$this->table_name] as $drink_id => $drink) {
 //            $this->db->deleteRow($this->table_name, $drink_id);
 //        }

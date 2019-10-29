@@ -2,54 +2,185 @@
 
 require('../core/functions/file.php');
 require('../bootloader.php');
+require('../core/functions/form/core.php');
+require('../core/functions/html/generators.php');
 
 
 $vodke1 = [
-    'name' => 'svaboda',
+    'name' => 'pobeda',
     'abarot' => 0.55,
     'amount' => 700,
-    'url' => 'https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1551803518-smirnoff-new-no-21-bottle-final-1551803504.png',
+    'url' => 'https://www.vynoguru.lt/media/catalog/product/cache/2/image/800x600/9df78eab33525d08d6e5fb8d27136e95/l/i/lithuanian_vodka_originali_1_l.jpg',
 ];
 $vodke2 = [
     'name' => 'svaboda',
     'abarot' => 0.22,
     'amount' => 990,
-    'url' => 'hzopa',
+    'url' => 'https://www.vynoguru.lt/media/catalog/product/cache/2/image/800x600/9df78eab33525d08d6e5fb8d27136e95/4/7/4770033221395_degtine_lithuanian_vodka_auksine_0_7l2.jpg',
 ];
 
 $vodkes3 = [
-    'name' => 'svaboda',
+    'name' => 'asdnajksd',
     'abarot' => 0.44,
-    'amount' => 1100,
-    'url' => 'ragas',
-    'id' => 1,
+    'amount' => 1160,
+    'url' => 'https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjem9P7977lAhXvwqYKHUW1B5MQjRx6BAgBEAQ&url=https%3A%2F%2Fwww.vynomeka.lt%2Fuzpiltiniu-degtine-07-l&psig=AOvVaw3kWRhV64KRLPdF3YKuRrQs&ust=1572351424135494',
+];
+$vodke4 = [
+    'name' => 'svabodnaja',
+    'abarot' => 0.22,
+    'amount' => 990,
+    'url' => 'https://images.kainos24.lt/6423/75/stumbras-vodka-tyra-0-5-l.jpg',
 ];
 
 
-$modelDrinks = new \App\Drinks\Model();
+//$drink = new \App\Drinks\Drink();
+$fileDB = new \Core\FileDB(DB_FILE);
+$modelDrinks = new \App\Drinks\Model($fileDB);
 
+$form = [
+    'attr' => [],
+    'fields' => [
+        'name' => [
+            'type' => 'name',
+            'attr' => [
+                'placeholder' => 'Pavadinimas',
+            ],
+            'validate' => [
+                'validate_not_empty',
 
-$drink1 = new \App\Drinks\Drink($vodke1);
-$drink2 = new \App\Drinks\Drink($vodke2);
-$drink3 = new \App\Drinks\Drink($vodkes3);
+            ],
+        ],
+        'amount' => [
+            'type' => 'number',
+            'attr' => [
+                'placeholder' => 'talpa',
+            ],
+            'validate' => [
+                'validate_not_empty',
+            ],
+        ],
+        'abarot' => [
+            'type' => 'abarot',
+            'attr' => [
+                'placeholder' => 'laipsniai',
+            ],
+            'validate' => [
+                'validate_not_empty',
+            ],
+        ],
+        'url' => [
+            'type' => 'url',
+            'attr' => [
+                'placeholder' => 'Paveikslelio nuoroda',
+            ],
+            'validate' => [
+                'validate_not_empty',
+            ],
+        ],
+    ],
+    'buttons' => [
+        'button' => [
+            'type' => 'submit',
+            'value' => 'submit'
+        ],
+    ],
+    'validators' => [
 
-$modelDrinks->insertDrink($drink1);
-$modelDrinks->insertDrink($drink2);
-$modelDrinks->insertDrink($drink3);
+    ],
+    'callbacks' => [
+        'success' => 'form_success',
+        'fail' => 'form_fail',
+    ],
+];
 
+$filtered_input = get_filtered_input($form);
 
-//var_dump($modelDrinks->getDrinks(['name' => 'svaboda']));
-//var_dump($modelDrinks->updateDrink($drink3));
-//var_dump($modelDrinks->getDrinks(['name' => 'svaboda']));
+if (!empty($filtered_input)) {
+    validate_form($form, $filtered_input);
+}
 
+function form_success($filtered_input, $form)
+{
+    $modelDrinks = new \App\Drinks\Model($fileDB);
+    $drink = new \App\Drinks\Drink($filtered_input);
+    var_dump($modelDrinks->insertDrink($drink));
+}
 
-//var_dump($unlucky = $modelDrinks->getDrinks(['amount' => 1100]));
-//foreach ($unlucky as $drink) {
-//    var_dump($modelDrinks->deleteDrink($drink));
-//}
-var_dump($modelDrinks);
+function form_fail($filtered_input, &$form)
+{
+}
 
-var_dump($modelDrinks->deleteAll());
-var_dump($modelDrinks->getDrinks(['name' => 'svaboda']));
+var_dump($modelDrinks->getDrinks());
+
+?>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .container {
+            width: 90vw;
+            height: 300px;
+            margin: auto;
+        }
+
+        .bottle-container {
+            width: 20%;
+            height: 300px;
+            display: inline-block;
+            margin: auto;
+        }
+
+        img {
+
+            height: 80%;
+            overflow: hidden;
+
+        }
+
+        .name {
+            width: 60%;
+            display: block;
+            margin: auto;
+            text-align: center;
+        }
+
+        .abarot {
+            width: 60%;
+            display: block;
+            margin: auto;
+            text-align: center;
+        }
+
+        .Amount {
+            width: 60%;
+            display: block;
+            margin: auto;
+            text-align: center;
+        }
+
+        .form-container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <?php foreach ($modelDrinks->getDrinks() as $drink_id => $drink): ?>
+            <div class="bottle-container">
+                <img alt="<?php $drink->getName(); ?>" src="<?php print $drink->getImage(); ?>">
+                <div class='name'><?php print "Pavadinimas: {$drink->getName()}"; ?></div>
+                <div class="abarot"><?php print"Laipsniai: {$drink->getAbarot()} %"; ?></div>
+                <div class="Amount"><?php print "Turis {$drink->getAmount()} ml"; ?></div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="form-container">   <?php require('../core/templates/form.tpl.php'); ?></div>
+
+</body>
+</html>
+
 
 
