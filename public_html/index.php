@@ -5,6 +5,8 @@ require('../bootloader.php');
 require('../core/functions/form/core.php');
 require('../core/functions/html/generators.php');
 
+use App\App;
+
 $modelDrinks = new \App\Drinks\Model();
 
 $vodke1 = [
@@ -19,7 +21,6 @@ $vodke2 = [
     'amount' => 990,
     'url' => 'https://www.vynoguru.lt/media/catalog/product/cache/2/image/800x600/9df78eab33525d08d6e5fb8d27136e95/4/7/4770033221395_degtine_lithuanian_vodka_auksine_0_7l2.jpg',
 ];
-
 $vodke3 = [
     'name' => 'asdnajksd',
     'abarot' => 0.44,
@@ -33,7 +34,6 @@ $vodke4 = [
     'url' => 'https://images.kainos24.lt/6423/75/stumbras-vodka-tyra-0-5-l.jpg',
 ];
 
-
 //$drink1 = new \App\Drinks\Drink($vodke1);
 //$drink2 = new \App\Drinks\Drink($vodke2);
 //$drink3 = new \App\Drinks\Drink($vodke3);
@@ -42,7 +42,6 @@ $vodke4 = [
 //$modelDrinks->insertDrink($drink2);
 //$modelDrinks->insertDrink($drink3);
 //$modelDrinks->insertDrink($drink4);
-
 
 $form = [
     'attr' => [],
@@ -54,7 +53,6 @@ $form = [
             ],
             'validate' => [
                 'validate_not_empty',
-
             ],
         ],
         'amount' => [
@@ -95,8 +93,6 @@ $form = [
                 'validate_not_empty',
             ],
         ],
-
-
     ],
     'buttons' => [
         'button' => [
@@ -125,9 +121,7 @@ $form = [
 ];
 
 foreach ($modelDrinks->getDrinks() as $drink) {
-    var_dump($drink);
     $form['fields']['select']['options'][$drink->getId()] = $drink->getName();
-
 }
 
 if (get_form_action() === 'submit') {
@@ -139,16 +133,15 @@ if (get_form_action() === 'submit') {
 
 } elseif (get_form_action() === 'delete') {
     $modelDrinks->deleteAll();
+
 } elseif (get_form_action() === 'update') {
     session_start();
     $filtered_input = get_filtered_input($form);
-    $modelDrinks->getDrinks(['name' => 'svaboda']);
     $_SESSION = [
         'id' => $filtered_input['select'],
     ];
     header('Location:update.php');
 }
-
 
 function form_success($filtered_input, $form)
 {
@@ -160,6 +153,19 @@ function form_success($filtered_input, $form)
 function form_fail($filtered_input, &$form)
 {
 }
+
+//$user=[
+//        'name'=>'Tadas',
+//    'email'=>'tomas@qqq',
+//    'password'=>'asnasndia',];
+//
+//$users=new \App\Users\User($user);
+//$modelUsers=new \App\Users\Model();
+//$modelUsers->insertUser($users);
+//var_dump($modelUsers->getUsers());
+
+
+
 
 ?>
 <html>

@@ -7,4 +7,6 @@ require 'config.php';
 
 require ROOT . '/vendor/autoload.php';
 
+
 $App = new \App\App();
+session_start();

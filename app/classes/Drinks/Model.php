@@ -9,7 +9,6 @@ use App\App;
 
 class Model
 {
-    public $db;
     private $table_name = 'drinks';
 
 
@@ -22,7 +21,6 @@ class Model
      */
     public function __construct()
     {
-        $this->db = App::$db;
         App::$db->createTable($this->table_name);
 
     }
