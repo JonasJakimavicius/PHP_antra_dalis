@@ -1,17 +1,16 @@
 <?php
 
-require('../core/functions/file.php');
-require('../bootloader.php');
-require('../core/functions/form/core.php');
-require('../core/functions/html/generators.php');
 
-use App\App;
+require('../bootloader.php');
+
+
 
 $modelDrinks = new \App\Drinks\Model();
 
+
 $vodke1 = [
     'name' => 'pobeda',
-    'abarot' => 0.55,
+    'abarot' => 0.05,
     'amount' => 700,
     'url' => 'https://www.vynoguru.lt/media/catalog/product/cache/2/image/800x600/9df78eab33525d08d6e5fb8d27136e95/l/i/lithuanian_vodka_originali_1_l.jpg',
 ];
@@ -48,6 +47,7 @@ $form = [
     'fields' => [
         'name' => [
             'type' => 'name',
+            'label' => 'Name',
             'attr' => [
                 'placeholder' => 'Pavadinimas',
             ],
@@ -57,6 +57,7 @@ $form = [
         ],
         'amount' => [
             'type' => 'number',
+            'label' => 'Amount',
             'attr' => [
                 'placeholder' => 'talpa',
             ],
@@ -66,6 +67,7 @@ $form = [
         ],
         'abarot' => [
             'type' => 'number',
+            'label' => 'Laipsniai',
             'attr' => [
                 'placeholder' => 'laipsniai',
             ],
@@ -75,6 +77,7 @@ $form = [
         ],
         'url' => [
             'type' => 'url',
+            'label' => 'Nuotrauka',
             'attr' => [
                 'placeholder' => 'Paveikslelio nuoroda',
             ],
@@ -84,6 +87,7 @@ $form = [
         ],
         'select' => [
             'type' => 'select',
+            'label' => 'Pasirinkite, ka redaguosite',
             'options' => [
             ],
             'attr' => [
@@ -124,6 +128,19 @@ foreach ($modelDrinks->getDrinks() as $drink) {
     $form['fields']['select']['options'][$drink->getId()] = $drink->getName();
 }
 
+if (!empty($_SESSION['name'])) {
+    $modelUsers = new \App\Users\Model();
+    $users_array = $modelUsers->getUsers();
+    foreach ($users_array as $user) {
+        if ($user->getName() == $_SESSION['name']) {
+            if ($user->getPassword() == $_SESSION['password']) {
+                $all_gud = true;
+                break;
+
+            }
+        }
+    }
+}
 if (get_form_action() === 'submit') {
     $filtered_input = get_filtered_input($form);
 
@@ -135,12 +152,12 @@ if (get_form_action() === 'submit') {
     $modelDrinks->deleteAll();
 
 } elseif (get_form_action() === 'update') {
-    session_start();
+
     $filtered_input = get_filtered_input($form);
-    $_SESSION = [
-        'id' => $filtered_input['select'],
-    ];
+    $_SESSION['id'] = $filtered_input['select'];
     header('Location:update.php');
+
+
 }
 
 function form_success($filtered_input, $form)
@@ -154,17 +171,6 @@ function form_fail($filtered_input, &$form)
 {
 }
 
-//$user=[
-//        'name'=>'Tadas',
-//    'email'=>'tomas@qqq',
-//    'password'=>'asnasndia',];
-//
-//$users=new \App\Users\User($user);
-//$modelUsers=new \App\Users\Model();
-//$modelUsers->insertUser($users);
-//var_dump($modelUsers->getUsers());
-
-
 
 
 ?>
@@ -172,69 +178,29 @@ function form_fail($filtered_input, &$form)
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <style>
-        .container {
-            width: 90vw;
-            height: 300px;
-            margin: auto;
-        }
-
-        .bottle-container {
-            width: 20%;
-            height: 300px;
-            display: inline-block;
-            margin: auto;
-        }
-
-        img {
-
-            height: 80%;
-            overflow: hidden;
-
-        }
-
-        .name {
-            width: 60%;
-            display: block;
-            margin: auto;
-            text-align: center;
-        }
-
-        .abarot {
-            width: 60%;
-            display: block;
-            margin: auto;
-            text-align: center;
-        }
-
-        .Amount {
-            width: 60%;
-            display: block;
-            margin: auto;
-            text-align: center;
-        }
-
-        .form-container {
-            margin-top: 50px;
-        }
-    </style>
+    <link href="css/index-form.css" rel="stylesheet">
+    <link href="css/bottles.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">
 </head>
 <body>
-    <div class="form-container">
-        <?php require('../core/templates/form.tpl.php'); ?>
-    </div>
+    <?php require('../core/navbar.php'); ?>
+    <?php if (isset($all_gud)): ?>
+        <div class="form-container">
+            <?php require('../core/templates/form.tpl.php'); ?>
+        </div>
+    <?php endif; ?>
     <div class="container">
         <?php foreach ($modelDrinks->getDrinks() as $drink_id => $drink): ?>
             <div class="bottle-container">
                 <img alt="<?php $drink->getName(); ?>" src="<?php print $drink->getImage(); ?>">
-                <div class='name'><?php print "Pavadinimas: {$drink->getName()}"; ?></div>
-                <div class="abarot"><?php print"Laipsniai: {$drink->getAbarot()} %"; ?></div>
-                <div class="Amount"><?php print "Turis {$drink->getAmount()} ml"; ?></div>
+                <div class="text-container">
+                    <div class=' name'><?php print "Pavadinimas: {$drink->getName()}"; ?></div>
+                    <div class="abarot"><?php print"Laipsniai: {$drink->getAbarot()} %"; ?></div>
+                    <div class="Amount"><?php print "Turis {$drink->getAmount()} ml"; ?></div>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
-
-
 </body>
 </html>
 

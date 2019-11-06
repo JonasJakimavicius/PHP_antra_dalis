@@ -47,7 +47,7 @@ class Model
         $new_array = [];
         foreach ($array as $object_id => $object) {
             $object['id'] = $object['row_id'];
-            $new_array[] = new Drink($object);
+            $object['abarot'] > 0.20 ? $new_array[] = new StrongDrink($object) : $new_array[] = new LightDrink($object);
         }
         return $new_array;
     }

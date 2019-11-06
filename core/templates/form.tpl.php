@@ -23,7 +23,7 @@
                     <?php endif; ?>
 
                     <?php if (isset($field['error'])): ?>
-                        <div> <?php print $field['error']; ?></div>
+                        <div class="error"> <?php print $field['error']; ?></div>
                     <?php endif; ?>
 
 

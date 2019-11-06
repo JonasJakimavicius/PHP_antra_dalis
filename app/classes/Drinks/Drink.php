@@ -12,7 +12,7 @@ class Drink
         return $this->data['name'];
     }
 
-    public function setName(string $name)
+    public function setName(?string $name)
     {
         $this->data['name'] = $name;
     }
@@ -20,12 +20,12 @@ class Drink
 
     public function getAmount(): ?int
     {
-        return $this->data['amount_ml'];
+        return $this->data['amount'];
     }
 
-    public function setAmount(int $amount_ml)
+    public function setAmount(?int $amount)
     {
-        $this->data['amount_ml'] = $amount_ml;
+        $this->data['amount'] = $amount;
     }
 
     public function getAbarot():?float
@@ -34,7 +34,7 @@ class Drink
     }
 
 
-    public function setAbarot(float $abarot)
+    public function setAbarot(?float $abarot)
     {
         $this->data['abarot'] = $abarot;
     }
@@ -46,7 +46,7 @@ class Drink
     }
 
 
-    public function setImage(string $url)
+    public function setImage(?string $url)
     {
         $this->data['url'] = $url;
     }
@@ -57,7 +57,7 @@ class Drink
     }
 
 
-    public function setId(int $id)
+    public function setId(?int $id)
     {
        $this->data['id'] = $id;
     }

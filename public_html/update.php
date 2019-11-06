@@ -1,17 +1,15 @@
 <?php
 
-require('../core/functions/file.php');
-require('../bootloader.php');
-require('../core/functions/form/core.php');
-require('../core/functions/html/generators.php');
 
-session_start();
+require('../bootloader.php');
+
 
 $form = [
     'attr' => [],
     'fields' => [
         'name' => [
             'type' => 'name',
+            'label'=>'Name',
             'attr' => [
                 'placeholder' => 'Pavadinimas',
             ],
@@ -22,6 +20,7 @@ $form = [
         ],
         'amount' => [
             'type' => 'number',
+            'label'=>'Amount',
             'attr' => [
                 'placeholder' => 'talpa',
             ],
@@ -31,6 +30,7 @@ $form = [
         ],
         'abarot' => [
             'type' => 'number',
+            'label'=>'Laipsniai',
             'attr' => [
                 'placeholder' => 'laipsniai',
             ],
@@ -40,6 +40,7 @@ $form = [
         ],
         'url' => [
             'type' => 'url',
+            'label'=>'Paveikslelis',
             'attr' => [
                 'placeholder' => 'Paveikslelio nuoroda',
             ],
@@ -55,6 +56,11 @@ $form = [
             'name' => 'action'
         ],
         'button1' => [
+            'type' => 'submit',
+            'value' => 'delete',
+            'name' => 'action'
+        ],
+        'button2' => [
             'type' => 'submit',
             'value' => 'cancel',
             'name' => 'action'
@@ -75,8 +81,13 @@ $modelDrinks = new \App\Drinks\Model();
 $model_drinks_array = $modelDrinks->getDrinks();
 
 
-$drink = $model_drinks_array[$_SESSION['id']];
-
+foreach ($model_drinks_array as $drink_id => $drink) {
+    if ($drink->getId() == $_SESSION['id']) {
+        $drink = $model_drinks_array[$drink_id];
+    } else {
+        false;
+    }
+}
 
 //jei paspaudziu save- formos template veikia, kaip visada
 if (get_form_action() === 'save') {
@@ -88,6 +99,8 @@ if (get_form_action() === 'save') {
 // Jei paspaudziu cancel - redirectina i index page.
 } elseif (get_form_action() === 'cancel') {
     header('Location:index.php');
+} elseif (get_form_action() === 'delete') {
+    $modelDrinks->deleteDrink($drink);
 }
 
 
@@ -99,6 +112,7 @@ function form_success($filtered_input, $form)
     $filtered_input['id'] = $_SESSION['id'];
     $drink = new \App\Drinks\Drink($filtered_input);
     $modelDrinks->updateDrink($drink);
+    header('Location:index.php');
 }
 
 function form_fail($filtered_input, &$form)
@@ -116,57 +130,16 @@ $form['fields']['url']['attr']['value'] = $drink->getImage();
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <style>
-        .container {
-            width: 90vw;
-            height: 300px;
-            margin: auto;
-        }
-
-        .bottle-container {
-            width: 20%;
-            height: 300px;
-            display: inline-block;
-            margin: auto;
-        }
-
-        img {
-
-            height: 80%;
-            overflow: hidden;
-
-        }
-
-        .name {
-            width: 60%;
-            display: block;
-            margin: auto;
-            text-align: center;
-        }
-
-        .abarot {
-            width: 60%;
-            display: block;
-            margin: auto;
-            text-align: center;
-        }
-
-        .Amount {
-            width: 60%;
-            display: block;
-            margin: auto;
-            text-align: center;
-        }
-
-        .form-container {
-            margin-top: 50px;
-        }
-    </style>
+    <link href="css/navbar.css" rel="stylesheet">
+    <link href="css/bottles.css" rel="stylesheet">
+    <link href="css/update-form.css" rel="stylesheet">
 </head>
 <body>
+    <?php require('../core/navbar.php'); ?>
     <div class="form-container">
         <?php require('../core/templates/form.tpl.php'); ?>
     </div>
+    <h1>Selected drink</h1>
     <div class="container">
         <div class="bottle-container">
             <img alt="<?php $drink->getName(); ?>" src="<?php print $drink->getImage(); ?>">

@@ -1,19 +1,16 @@
 <?php
 
-require('../core/functions/file.php');
 require('../bootloader.php');
-require('../core/functions/form/core.php');
-require('../core/functions/html/generators.php');
 
 
 use App\App;
-
 
 $form = [
     'attr' => [],
     'fields' => [
         'name' => [
             'type' => 'text',
+            'label' => 'Name',
             'attr' => [
                 'placeholder' => 'Vardas',
                 'class' => 'name'
@@ -25,18 +22,21 @@ $form = [
 
         'email' => [
             'type' => 'email',
+            'label' => 'Email',
             'attr' => [
                 'placeholder' => 'Emailas',
                 'class' => 'email'
             ],
             'validate' => [
                 'validate_not_empty',
-                'validate_email'
+                'validate_email',
+                'validate_email_unique'
 
             ],
         ],
         'password' => [
             'type' => 'password',
+            'label' => 'Slaptazodis',
             'attr' => [
                 'placeholder' => 'password',
                 'class' => 'password'
@@ -48,6 +48,7 @@ $form = [
         ],
         'password_repeat' => [
             'type' => 'password',
+            'label' => 'Pakartokite slaptazodi',
             'attr' => [
                 'placeholder' => 'password',
                 'class' => 'password'
@@ -66,7 +67,7 @@ $form = [
         ],
     ],
     'validators' => [
-        'validate_fields_match'=>[
+        'validate_fields_match' => [
             'password',
             'password_repeat'
         ]
@@ -78,6 +79,9 @@ $form = [
     ],
 ];
 
+if(isset($_SESSION['name'])){
+    header('Location:index.php');
+}
 
 $filtered_input = get_filtered_input($form);
 
@@ -85,13 +89,12 @@ if (!empty($filtered_input)) {
     validate_form($form, $filtered_input);
 }
 
-
 function form_success($filtered_input, $form)
 {
     $modelUsers = new \App\Users\Model();
     $user = new \App\Users\User($filtered_input);
     $modelUsers->insertUser($user);
-    header('Location:login.php');
+//    header('Location:login.php');
 }
 
 function form_fail($filtered_input, &$form)
@@ -104,58 +107,18 @@ function form_fail($filtered_input, &$form)
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <style>
-        .container {
-            width: 90vw;
-            height: 300px;
-            margin: auto;
-        }
+    <link href="css/navbar.css" rel="stylesheet">
+    <link href="css/register-form.css" rel="stylesheet">
 
-        .bottle-container {
-            width: 20%;
-            height: 300px;
-            display: inline-block;
-            margin: auto;
-        }
 
-        img {
-
-            height: 80%;
-            overflow: hidden;
-
-        }
-
-        .name {
-            width: 60%;
-            display: block;
-            margin: auto;
-            text-align: center;
-        }
-
-        .abarot {
-            width: 60%;
-            display: block;
-            margin: auto;
-            text-align: center;
-        }
-
-        .Amount {
-            width: 60%;
-            display: block;
-            margin: auto;
-            text-align: center;
-        }
-
-        .form-container {
-            margin-top: 50px;
-        }
-    </style>
 </head>
 <body>
-    <div class="form-container">
-        <?php require('../core/templates/form.tpl.php'); ?>
+    <?php require('../core/navbar.php'); ?>
+    <div class="form-container-bigger">
+        <div class="form-container">
+            <?php require('../core/templates/form.tpl.php'); ?>
+        </div>
     </div>
-
 
 </body>
 </html>

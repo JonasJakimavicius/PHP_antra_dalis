@@ -1,0 +1,67 @@
+.form-container-bigger {
+    width: 600px;
+    height: 200px;
+
+
+    z-index: -2;
+    margin: auto;
+    margin-top: 18%;
+
+}
+
+.form-container {
+
+    width: 400px;
+    display: block;
+    margin: auto;
+    z-index: 3;
+
+
+}
+
+.form-container label input {
+    float: right;
+    width: 200px;
+
+}
+
+.form-container label input::placeholder {
+    text-align: center;
+
+}
+
+label {
+    display: inline-block;
+    width: 400px;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.buttons-container {
+    width: 400px;
+    margin-top: 10px;
+
+}
+
+.buttons-container input {
+    display: block;
+    width: 300px;
+    background-color: green;
+    height: 40px;
+    border-radius: 7px;
+    margin: auto;
+    margin-top: 10px;
+
+}
+
+.input-container {
+    width: 500px;
+
+}
+
+body {
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-image: url("https://image.shutterstock.com/image-photo/empty-studio-gradient-background-display-260nw-1249460251.jpg");
+}
