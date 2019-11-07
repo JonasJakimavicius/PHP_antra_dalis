@@ -1,10 +1,10 @@
-<?php if (isset($form) && !empty($form)): ?>
-    <form <?php print html_attr(($form['attr']) + ['method' => 'post']); ?>>
+<?php if (isset($data) && !empty($data)): ?>
+    <form <?php print html_attr(($data['attr']) + ['method' => 'post']); ?>>
 
-        <?php if (isset ($form['fields'])): ?>
+        <?php if (isset ($data['fields'])): ?>
             <div class="input-container">
 
-                <?php foreach ($form['fields'] ?? [] as $field_id => $field): ?>
+                <?php foreach ($data['fields'] ?? [] as $field_id => $field): ?>
 
                     <?php if (isset($field['label'])) : ?>
                         <label>
@@ -27,7 +27,6 @@
                     <?php endif; ?>
 
 
-
                     <?php if (isset($field['label'])) : ?>
                         </label>
                     <?php endif; ?>
@@ -36,19 +35,19 @@
             </div>
         <?php endif; ?>
 
-        <?php if (isset($form['error'])): ?>
-            <div> <?php print $form['error']; ?></div>
+        <?php if (isset($data['error'])): ?>
+            <div> <?php print $data['error']; ?></div>
         <?php endif; ?>
 
-        <?php if (isset ($form['buttons'])): ?>
+        <?php if (isset ($data['buttons'])): ?>
             <div class="buttons-container">
 
-                <?php foreach ($form['buttons'] ?? [] as $button_id => $button): ?>
-                    <input <?php print html_attr($button); ?><?php print $form['buttons']['button']['value']; ?> ></input>
+                <?php foreach ($data['buttons'] ?? [] as $button_id => $button): ?>
+                    <input <?php print html_attr($button); ?><?php print $data['buttons']['button']['value']; ?> ></input>
                 <?php endforeach; ?>
 
-                <?php if (isset($form['message'])): ?>
-                    <div><?php print $form['message']; ?></div>
+                <?php if (isset($data['message'])): ?>
+                    <div><?php print $data['message']; ?></div>
                 <?php endif; ?>
 
             </div>

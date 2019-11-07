@@ -100,7 +100,8 @@ function form_success($filtered_input, $form)
 function form_fail($filtered_input, &$form)
 {
 }
-
+$form_template = new \Core\View($form);
+$navbar = new \App\Views\NavBar();
 
 ?>
 <html>
@@ -113,10 +114,10 @@ function form_fail($filtered_input, &$form)
 
 </head>
 <body>
-    <?php require('../core/navbar.php'); ?>
+    <?php print  $navbar->render(); ?>
     <div class="form-container-bigger">
         <div class="form-container">
-            <?php require('../core/templates/form.tpl.php'); ?>
+            <?php print $form_template->render('/Users/home/Desktop/php projektai/core/templates/form.tpl.php'); ?>
         </div>
     </div>
 

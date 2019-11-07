@@ -4,43 +4,7 @@
 require('../bootloader.php');
 
 
-
 $modelDrinks = new \App\Drinks\Model();
-
-
-$vodke1 = [
-    'name' => 'pobeda',
-    'abarot' => 0.05,
-    'amount' => 700,
-    'url' => 'https://www.vynoguru.lt/media/catalog/product/cache/2/image/800x600/9df78eab33525d08d6e5fb8d27136e95/l/i/lithuanian_vodka_originali_1_l.jpg',
-];
-$vodke2 = [
-    'name' => 'svaboda',
-    'abarot' => 0.22,
-    'amount' => 990,
-    'url' => 'https://www.vynoguru.lt/media/catalog/product/cache/2/image/800x600/9df78eab33525d08d6e5fb8d27136e95/4/7/4770033221395_degtine_lithuanian_vodka_auksine_0_7l2.jpg',
-];
-$vodke3 = [
-    'name' => 'asdnajksd',
-    'abarot' => 0.44,
-    'amount' => 1160,
-    'url' => 'https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjem9P7977lAhXvwqYKHUW1B5MQjRx6BAgBEAQ&url=https%3A%2F%2Fwww.vynomeka.lt%2Fuzpiltiniu-degtine-07-l&psig=AOvVaw3kWRhV64KRLPdF3YKuRrQs&ust=1572351424135494',
-];
-$vodke4 = [
-    'name' => 'svabodnaja',
-    'abarot' => 0.22,
-    'amount' => 990,
-    'url' => 'https://images.kainos24.lt/6423/75/stumbras-vodka-tyra-0-5-l.jpg',
-];
-
-//$drink1 = new \App\Drinks\Drink($vodke1);
-//$drink2 = new \App\Drinks\Drink($vodke2);
-//$drink3 = new \App\Drinks\Drink($vodke3);
-//$drink4 = new \App\Drinks\Drink($vodke4);
-//$modelDrinks->insertDrink($drink1);
-//$modelDrinks->insertDrink($drink2);
-//$modelDrinks->insertDrink($drink3);
-//$modelDrinks->insertDrink($drink4);
 
 $form = [
     'attr' => [],
@@ -124,6 +88,8 @@ $form = [
     ],
 ];
 
+
+
 foreach ($modelDrinks->getDrinks() as $drink) {
     $form['fields']['select']['options'][$drink->getId()] = $drink->getName();
 }
@@ -171,6 +137,9 @@ function form_fail($filtered_input, &$form)
 {
 }
 
+$form_template = new \Core\View($form);
+$navbar = new \App\Views\NavBar();
+
 
 
 ?>
@@ -183,12 +152,16 @@ function form_fail($filtered_input, &$form)
     <link href="css/navbar.css" rel="stylesheet">
 </head>
 <body>
-    <?php require('../core/navbar.php'); ?>
+
+    <?php print  $navbar->render(); ?>
     <?php if (isset($all_gud)): ?>
         <div class="form-container">
-            <?php require('../core/templates/form.tpl.php'); ?>
+
+            <?php print $form_template->render('/Users/home/Desktop/php projektai/core/templates/form.tpl.php'); ?>
         </div>
     <?php endif; ?>
+
+
     <div class="container">
         <?php foreach ($modelDrinks->getDrinks() as $drink_id => $drink): ?>
             <div class="bottle-container">

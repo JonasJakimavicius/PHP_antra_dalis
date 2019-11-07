@@ -74,7 +74,8 @@ function form_success($filtered_input, $form)
 function form_fail($filtered_input, &$form)
 {
 }
-
+$form_template = new \Core\View($form);
+$navbar = new \App\Views\NavBar();
 
 ?>
 <html>
@@ -85,15 +86,12 @@ function form_fail($filtered_input, &$form)
     <link href="css/login.css" rel="stylesheet">
 </head>
 <body>
+    <?php print  $navbar->render(); ?>
 
-    <?php require('../core/navbar.php'); ?>
-    <?php if (isset($_SESSION['name'])): ?>
-        <h1>Tu jau prisijungęs <?php print $_SESSION['name']; ?></h1>
-    <?php else: ?>
         <div class="form-container">
-            <?php require('../core/templates/form.tpl.php'); ?>
+            <?php print $form_template->render('/Users/home/Desktop/php projektai/core/templates/form.tpl.php'); ?>
         </div>
-    <?php endif; ?>
+
 
 </body>
 </html>

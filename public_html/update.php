@@ -125,6 +125,9 @@ $form['fields']['abarot']['attr']['value'] = $drink->getAbarot();
 $form['fields']['amount']['attr']['value'] = $drink->getAmount();
 $form['fields']['url']['attr']['value'] = $drink->getImage();
 
+$form_template = new \Core\View($form);
+$navbar = new \App\Views\NavBar();
+
 ?>
 <html>
 <head>
@@ -135,9 +138,9 @@ $form['fields']['url']['attr']['value'] = $drink->getImage();
     <link href="css/update-form.css" rel="stylesheet">
 </head>
 <body>
-    <?php require('../core/navbar.php'); ?>
+    <?php print  $navbar->render(); ?>
     <div class="form-container">
-        <?php require('../core/templates/form.tpl.php'); ?>
+        <?php print $form_template->render('/Users/home/Desktop/php projektai/core/templates/form.tpl.php'); ?>
     </div>
     <h1>Selected drink</h1>
     <div class="container">

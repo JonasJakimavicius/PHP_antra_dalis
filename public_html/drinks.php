@@ -71,6 +71,8 @@ function form_fail($filtered_input, &$form)
 {
 }
 
+$form_template = new \Core\View($form);
+$navbar = new \App\Views\NavBar();
 
 ?>
 <html>
@@ -83,10 +85,10 @@ function form_fail($filtered_input, &$form)
     <link href="css/drinks.css" rel="stylesheet">
 </head>
 <body>
-    <?php require('../core/navbar.php'); ?>
+    <?php print  $navbar->render('../core/templates/navbar.tpl.php'); ?>
 
     <div class="form-container">
-        <?php require('../core/templates/form.tpl.php'); ?>
+        <?php print $form_template->render('/Users/home/Desktop/php projektai/core/templates/form.tpl.php'); ?>
     </div>
 
     <div class="container">

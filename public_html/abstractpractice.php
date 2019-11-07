@@ -57,3 +57,6 @@ $corolla->drive();
 $corolla->getDoors();
 $corolla->getWheels();
 var_dump($corolla);
+
+var_dump($corolla->__construct(1992,5));
+var_dump($corolla);
